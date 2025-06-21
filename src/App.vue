@@ -1,32 +1,36 @@
 <script setup lang="ts">
-// Aquí puedes agregar lógica futura (llamadas a API, validación, etc.)
+// Aquí puedes agregar lógica futura
 </script>
 
 <template>
   <!-- HERO -->
   <section class="hero text-white flex items-center justify-center flex-col text-center p-6">
-    <h1 class="text-5xl md:text-6xl font-extrabold drop-shadow-xl tracking-tight">
+    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-lg">
       Mustang 2025
     </h1>
-    <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-2xl">
+    <p class="mt-6 text-xl md:text-2xl text-gray-200 max-w-3xl leading-relaxed">
       Pura adrenalina, diseño icónico y tecnología del futuro. El auto deportivo más emblemático se reinventa.
     </p>
+    <a href="#formulario"
+      class="mt-10 px-6 py-3 bg-[#A4161A] hover:bg-[#821015] rounded-full font-semibold text-white transition">
+      Solicita tu prueba de manejo
+    </a>
   </section>
 
   <!-- INFORMACIÓN DESTACADA -->
-  <section class="bg-[#1e1e1e] text-white py-16 px-6 md:px-12 flex flex-col md:flex-row gap-10 items-center">
+  <section class="bg-[#212121] text-white py-20 px-6 md:px-16 flex flex-col md:flex-row gap-12 items-center">
     <img
       src="https://www.ford.mx/content/ford/mx/es_mx/mustang-content/2025/media-carousel/interiores/jcr:content/par/mediacarouselitem_735337208/image.imgs.full.high.jpg/1741982958133.jpg"
       alt="Interior Mustang 2025"
-      class="w-full md:w-1/2 rounded-xl shadow-xl object-cover"
+      class="w-full md:w-1/2 rounded-2xl shadow-2xl object-cover max-h-[400px]"
     />
     <div class="md:w-1/2 space-y-6">
-      <h2 class="text-4xl font-bold text-[#d90429]">Redefiniendo el poder</h2>
+      <h2 class="text-4xl font-bold text-[#A4161A]">Redefiniendo el poder</h2>
       <p class="text-lg text-gray-300">
-        El Mustang 2025 no solo mantiene su legado, lo potencia con innovación sin precedentes:
+        El Mustang 2025 potencia su legado con innovación sin precedentes:
       </p>
-      <ul class="list-disc list-inside text-gray-400 space-y-1 text-lg">
-        <li>Motor V8 5.0L – hasta 500hp de pura fuerza</li>
+      <ul class="list-disc list-inside text-gray-400 space-y-2 text-lg">
+        <li>Motor V8 5.0L – hasta 500hp</li>
         <li>Interior digital inmersivo de nueva generación</li>
         <li>Escape activo con sonido ajustable</li>
         <li>Diseño agresivo, aerodinámico y moderno</li>
@@ -35,42 +39,81 @@
   </section>
 
   <!-- CARACTERÍSTICAS EN CARDS -->
-  <section class="bg-gray-100 text-center py-16 px-6">
-    <h2 class="text-3xl font-bold text-[#0f0f0f] mb-4">Tecnología & Diseño</h2>
-    <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
-      El Mustang 2025 combina su esencia clásica con los avances más modernos en experiencia y rendimiento.
+  <section class="bg-[#F5F5F5] text-center py-20 px-6">
+    <h2 class="text-3xl font-bold text-[#212121] mb-4">Tecnología & Diseño</h2>
+    <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-10">
+      Combina su esencia clásica con lo último en innovación y experiencia de manejo.
     </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-        <h3 class="text-xl font-semibold text-[#d90429] mb-2">Pantalla curva 13.2”</h3>
-        <p class="text-gray-700">Control total con SYNC 4 y experiencia digital inmersiva.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-[#A4161A] mb-2">Pantalla curva 13.2”</h3>
+        <p class="text-gray-600">Control total con SYNC 4 y experiencia digital inmersiva.</p>
       </div>
-      <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-        <h3 class="text-xl font-semibold text-[#d90429] mb-2">Luces LED inteligentes</h3>
-        <p class="text-gray-700">Estética moderna con iluminación adaptativa frontal y trasera.</p>
+      <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-[#A4161A] mb-2">Luces LED inteligentes</h3>
+        <p class="text-gray-600">Iluminación adaptativa para máxima visibilidad.</p>
       </div>
-      <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-        <h3 class="text-xl font-semibold text-[#d90429] mb-2">Modos de manejo</h3>
-        <p class="text-gray-700">Normal, Sport, Track: elige cómo domar la carretera.</p>
+      <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold text-[#A4161A] mb-2">Modos de manejo</h3>
+        <p class="text-gray-600">Normal, Sport y Track: elige tu nivel de adrenalina.</p>
       </div>
     </div>
   </section>
 
+  <!-- TESTIMONIOS -->
+  <section class="bg-white py-20 px-6 text-center">
+    <h2 class="text-3xl font-bold text-[#212121] mb-4">Lo que dicen nuestros clientes</h2>
+    <p class="text-gray-600 mb-10 max-w-2xl mx-auto">Experiencias reales, emociones verdaderas.</p>
+    <div class="flex flex-col md:flex-row gap-8 justify-center max-w-5xl mx-auto">
+      <div class="bg-gray-100 p-6 rounded-xl shadow-md">
+        <p class="italic text-gray-700">“Conducir el Mustang fue una experiencia única. Potencia y diseño sin igual.”</p>
+        <span class="block mt-4 font-semibold text-[#A4161A]">— Carla Mendoza</span>
+      </div>
+      <div class="bg-gray-100 p-6 rounded-xl shadow-md">
+        <p class="italic text-gray-700">“La tecnología y el confort me sorprendieron. Me enamoré al primer manejo.”</p>
+        <span class="block mt-4 font-semibold text-[#A4161A]">— Ricardo León</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="bg-[#F5F5F5] py-20 px-6">
+    <h2 class="text-3xl font-bold text-center text-[#212121] mb-10">Galería Mustang 2025</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <img
+        class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
+        src="https://www.ford.mx/content/ford/mx/es_mx/home/autos/mustang/2025/jcr:content/par/billboard_668607619/imageComponent/image.imgs.full.high.jpg"
+        alt="Mustang exterior"
+      />
+      <img
+        class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
+        src="https://www.ford.mx/content/ford/mx/es_mx/home/autos/mustang/2025/jcr:content/par/billboard_853974961/imageComponent/image.imgs.full.high.jpg"
+        alt="Interior digital"
+      />
+      <img
+        class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
+        src="https://www.ford.mx/content/ford/mx/es_mx/home/autos/mustang/2025/jcr:content/par/splitter/splitter0/image/image.imgs.full.high.jpg/1741967820813.jpg"
+        alt="Perfil Mustang"
+      />
+    </div>
+  </section>
+
   <!-- FORMULARIO -->
-  <section class="bg-[#1e1e1e] text-white py-20 px-6">
+  <section id="formulario" class="bg-[#212121] text-white py-24 px-6">
     <h2 class="text-3xl font-bold text-center mb-6">Solicita tu prueba de manejo</h2>
     <p class="text-lg text-center text-gray-400 mb-10 max-w-xl mx-auto">
       Completa el formulario y un asesor se pondrá en contacto contigo. ¡Haz rugir al Mustang 2025!
     </p>
 
-    <form class="max-w-2xl mx-auto bg-[#0f0f0f] p-8 rounded-xl shadow-xl space-y-6">
+    <form class="max-w-2xl mx-auto bg-[#101010] p-8 rounded-xl shadow-2xl space-y-6">
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-1">Nombre completo</label>
         <input
           type="text"
           placeholder="Tu nombre"
-          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-[#d90429]"
+          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]"
+          required
         />
       </div>
       <div>
@@ -78,7 +121,19 @@
         <input
           type="email"
           placeholder="correo@example.com"
-          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-[#d90429]"
+          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]"
+          required
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Teléfono</label>
+        <input
+          type="tel"
+          placeholder="+52 1 234 567 8901"
+          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]"
+          pattern="^\+?\d{7,15}$"
+          title="Ingresa un número de teléfono válido"
+          required
         />
       </div>
       <div>
@@ -86,12 +141,13 @@
         <textarea
           rows="4"
           placeholder="Estoy interesado en una prueba de manejo..."
-          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-[#d90429]"
+          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]"
+          required
         ></textarea>
       </div>
       <button
         type="submit"
-        class="w-full py-3 bg-[#d90429] hover:bg-red-700 text-white font-bold rounded-lg transition"
+        class="w-full py-3 bg-[#A4161A] hover:bg-[#821015] text-white font-bold rounded-lg transition"
       >
         Enviar
       </button>
@@ -99,7 +155,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-black text-gray-500 text-sm text-center py-6">
+  <footer class="bg-black text-gray-400 text-sm text-center py-6">
     &copy; 2025 Mustang Experience — Todos los derechos reservados.
   </footer>
 </template>
