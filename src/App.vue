@@ -225,6 +225,10 @@ const handleLoadCallback = (response: unknown) => {
         <ErrorMessage name="mensaje" class="text-red-500 text-sm mt-1" />
       </div>
 
+      <RecaptchaV2 @widget-id="handleWidgetId" @error-callback="handleErrorCallback"
+        @expired-callback="handleExpiredCallback" @load-callback="handleLoadCallback" />
+
+
       <button type="submit"
         class="w-full py-3 bg-[#A4161A] hover:bg-[#821015] text-white font-bold rounded-lg transition">
         Enviar
