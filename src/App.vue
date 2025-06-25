@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import { RecaptchaV2, useRecaptcha } from "vue3-recaptcha-v2";
+const { handleGetResponse } = useRecaptcha();
 
 const widgetId = ref<number | null>(null);
 
@@ -27,17 +28,15 @@ const schema = yup.object({
     .required("El mensaje es obligatorio"),
 });
 
+
 const enviarFormulario = async (values: any, { resetForm }: any) => {
   const token = handleGetResponse(widgetId.value);
-  console.log('*****************************', token)
   if (!token) {
     alert("Por favor completa el reCAPTCHA.");
     return;
   }
 
   values.recaptcha_token = token;
-
-
   try {
     const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/contacto`, {
       method: "POST",
@@ -61,8 +60,6 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
     alert("Ocurrió un error al enviar tu mensaje. Inténtalo más tarde.");
   }
 };
-
-const { handleGetResponse } = useRecaptcha();
 
 const handleWidgetId = (id: number) => {
   widgetId.value = id;
@@ -227,9 +224,6 @@ const handleLoadCallback = (response: unknown) => {
           class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]" />
         <ErrorMessage name="mensaje" class="text-red-500 text-sm mt-1" />
       </div>
-
-      <RecaptchaV2 @widget-id="handleWidgetId" @error-callback="handleErrorCallback"
-        @expired-callback="handleExpiredCallback" @load-callback="handleLoadCallback" />
 
       <button type="submit"
         class="w-full py-3 bg-[#A4161A] hover:bg-[#821015] text-white font-bold rounded-lg transition">
