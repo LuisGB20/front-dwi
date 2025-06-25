@@ -2,6 +2,9 @@
 import { ref } from "vue";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import { RecaptchaV2, useRecaptcha } from "vue3-recaptcha-v2";
+
+const widgetId = ref<number | null>(null);
 
 const schema = yup.object({
   nombre: yup
@@ -25,6 +28,16 @@ const schema = yup.object({
 });
 
 const enviarFormulario = async (values: any, { resetForm }: any) => {
+  const token = handleGetResponse(widgetId.value);
+  console.log('*****************************', token)
+  if (!token) {
+    alert("Por favor completa el reCAPTCHA.");
+    return;
+  }
+
+  values.recaptcha_token = token;
+
+
   try {
     const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/api/contacto`, {
       method: "POST",
@@ -48,38 +61,44 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
     alert("Ocurrió un error al enviar tu mensaje. Inténtalo más tarde.");
   }
 };
+
+const { handleGetResponse } = useRecaptcha();
+
+const handleWidgetId = (id: number) => {
+  widgetId.value = id;
+};
+
+const handleErrorCallback = () => {
+  // console.log("Error callback");
+};
+const handleExpiredCallback = () => {
+  // console.log("Expired callback");
+};
+const handleLoadCallback = (response: unknown) => {
+  // console.log("Load callback", response);
+};
 </script>
 
 
 <template>
-  <section
-    class="hero text-white flex items-center justify-center flex-col text-center p-6"
-  >
-    <h1
-      class="text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-lg"
-    >
+  <section class="hero text-white flex items-center justify-center flex-col text-center p-6">
+    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-lg">
       Mustang 2025
     </h1>
     <p class="mt-6 text-xl md:text-2xl text-gray-200 max-w-3xl leading-relaxed">
       Pura adrenalina, diseño icónico y tecnología del futuro. El auto deportivo
       más emblemático se reinventa.
     </p>
-    <a
-      href="#formulario"
-      class="mt-10 px-6 py-3 bg-[#A4161A] hover:bg-[#821015] rounded-full font-semibold text-white transition"
-    >
+    <a href="#formulario"
+      class="mt-10 px-6 py-3 bg-[#A4161A] hover:bg-[#821015] rounded-full font-semibold text-white transition">
       Solicita tu prueba de manejo
     </a>
   </section>
 
-  <section
-    class="bg-[#212121] text-white py-20 px-6 md:px-16 flex flex-col md:flex-row gap-12 items-center"
-  >
+  <section class="bg-[#212121] text-white py-20 px-6 md:px-16 flex flex-col md:flex-row gap-12 items-center">
     <img
       src="https://www.ford.mx/content/ford/mx/es_mx/mustang-content/2025/media-carousel/interiores/jcr:content/par/mediacarouselitem_735337208/image.imgs.full.high.jpg/1741982958133.jpg"
-      alt="Interior Mustang 2025"
-      class="w-full md:w-1/2 rounded-2xl shadow-2xl object-cover max-h-[400px]"
-    />
+      alt="Interior Mustang 2025" class="w-full md:w-1/2 rounded-2xl shadow-2xl object-cover max-h-[400px]" />
     <div class="md:w-1/2 space-y-6">
       <h2 class="text-4xl font-bold text-[#A4161A]">Redefiniendo el poder</h2>
       <p class="text-lg text-gray-300">
@@ -136,26 +155,20 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
     <p class="text-gray-600 mb-10 max-w-2xl mx-auto">
       Experiencias reales, emociones verdaderas.
     </p>
-    <div
-      class="flex flex-col md:flex-row gap-8 justify-center max-w-5xl mx-auto"
-    >
+    <div class="flex flex-col md:flex-row gap-8 justify-center max-w-5xl mx-auto">
       <div class="bg-gray-100 p-6 rounded-xl shadow-md">
         <p class="italic text-gray-700">
           “Conducir el Mustang fue una experiencia única. Potencia y diseño sin
           igual.”
         </p>
-        <span class="block mt-4 font-semibold text-[#A4161A]"
-          >— Carla Mendoza</span
-        >
+        <span class="block mt-4 font-semibold text-[#A4161A]">— Carla Mendoza</span>
       </div>
       <div class="bg-gray-100 p-6 rounded-xl shadow-md">
         <p class="italic text-gray-700">
           “La tecnología y el confort me sorprendieron. Me enamoré al primer
           manejo.”
         </p>
-        <span class="block mt-4 font-semibold text-[#A4161A]"
-          >— Ricardo León</span
-        >
+        <span class="block mt-4 font-semibold text-[#A4161A]">— Ricardo León</span>
       </div>
     </div>
   </section>
@@ -165,21 +178,15 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
       Galería Mustang 2025
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      <img
-        class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
+      <img class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
         src="https://www.ford.mx/content/ford/mx/es_mx/home/autos/mustang/2025/jcr:content/par/billboard_668607619/imageComponent/image.imgs.full.high.jpg"
-        alt="Mustang exterior"
-      />
-      <img
-        class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
+        alt="Mustang exterior" />
+      <img class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
         src="https://www.ford.mx/content/ford/mx/es_mx/home/autos/mustang/2025/jcr:content/par/billboard_853974961/imageComponent/image.imgs.full.high.jpg"
-        alt="Interior digital"
-      />
-      <img
-        class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
+        alt="Interior digital" />
+      <img class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
         src="https://www.ford.mx/content/ford/mx/es_mx/home/autos/mustang/2025/jcr:content/par/splitter/splitter0/image/image.imgs.full.high.jpg/1741967820813.jpg"
-        alt="Perfil Mustang"
-      />
+        alt="Perfil Mustang" />
     </div>
   </section>
 
@@ -191,60 +198,41 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
       Completa el formulario y un asesor se pondrá en contacto contigo. ¡Haz rugir al Mustang 2025!
     </p>
 
-    <Form
-      :validation-schema="schema"
-      @submit="enviarFormulario"
-      class="max-w-2xl mx-auto bg-[#101010] p-8 rounded-xl shadow-2xl space-y-6"
-    >
+    <Form :validation-schema="schema" @submit="enviarFormulario"
+      class="max-w-2xl mx-auto bg-[#101010] p-8 rounded-xl shadow-2xl space-y-6">
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-1">Nombre completo</label>
-        <Field
-          name="nombre"
-          type="text"
-          placeholder="Tu nombre"
-          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]"
-        />
+        <Field name="nombre" type="text" placeholder="Tu nombre"
+          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]" />
         <ErrorMessage name="nombre" class="text-red-500 text-sm mt-1" />
       </div>
 
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-1">Correo electrónico</label>
-        <Field
-          name="correo"
-          type="email"
-          placeholder="correo@example.com"
-          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]"
-        />
+        <Field name="correo" type="email" placeholder="correo@example.com"
+          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]" />
         <ErrorMessage name="correo" class="text-red-500 text-sm mt-1" />
       </div>
 
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-1">Teléfono</label>
-        <Field
-          name="telefono"
-          type="tel"
-          placeholder="+52 1 234 567 8901"
-          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]"
-        />
+        <Field name="telefono" type="tel" placeholder="+52 1 234 567 8901"
+          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]" />
         <ErrorMessage name="telefono" class="text-red-500 text-sm mt-1" />
       </div>
 
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-1">Mensaje</label>
-        <Field
-          name="mensaje"
-          as="textarea"
-          rows="4"
-          placeholder="Estoy interesado en una prueba de manejo..."
-          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]"
-        />
+        <Field name="mensaje" as="textarea" rows="4" placeholder="Estoy interesado en una prueba de manejo..."
+          class="w-full p-3 rounded-lg bg-[#1e1e1e] border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-[#A4161A]" />
         <ErrorMessage name="mensaje" class="text-red-500 text-sm mt-1" />
       </div>
 
-      <button
-        type="submit"
-        class="w-full py-3 bg-[#A4161A] hover:bg-[#821015] text-white font-bold rounded-lg transition"
-      >
+      <RecaptchaV2 @widget-id="handleWidgetId" @error-callback="handleErrorCallback"
+        @expired-callback="handleExpiredCallback" @load-callback="handleLoadCallback" />
+
+      <button type="submit"
+        class="w-full py-3 bg-[#A4161A] hover:bg-[#821015] text-white font-bold rounded-lg transition">
         Enviar
       </button>
     </Form>
@@ -257,22 +245,7 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
 <style scoped>
 .hero {
   background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
-    url("https://www.ford.mx/content/ford/mx/es_mx/home/autos/mustang/2025/jcr:content/par/billboard/imageComponent/image.imgs.full.high.jpg")
-      center/cover no-repeat;
+    url("https://www.ford.mx/content/ford/mx/es_mx/home/autos/mustang/2025/jcr:content/par/billboard/imageComponent/image.imgs.full.high.jpg") center/cover no-repeat;
   min-height: 100vh;
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
