@@ -20,16 +20,3 @@ import Tecnologia from './components/Tecnologia.vue';
 <style>
 
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-

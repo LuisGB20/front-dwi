@@ -5,6 +5,11 @@ import * as yup from "yup";
 import Swal from "sweetalert2";
 import TerminosYCondiciones from "./TerminosYCondiciones.vue";
 import AvisoDePrivacidad from "./AvisoDePrivacidad.vue";
+import { RecaptchaV2, useRecaptcha } from "vue3-recaptcha-v2";
+
+const { handleGetResponse } = useRecaptcha();
+
+const widgetId = ref<number | null>(null);
 
 const schema = yup.object({
   nombre: yup.string().trim().required("El nombre es obligatorio"),
@@ -28,6 +33,14 @@ const schema = yup.object({
 });
 
 const enviarFormulario = async (values: any, { resetForm }: any) => {
+  const token = handleGetResponse(widgetId.value);
+  if (!token) {
+    alert("Por favor completa el reCAPTCHA.");
+    return;
+  }
+
+  values.recaptcha_token = token;
+
   try {
     const respuesta = await fetch(
       `${import.meta.env.VITE_API_URL}/api/contacto`,
@@ -86,6 +99,20 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
       confirmButtonColor: "#A4161A",
     });
   }
+};
+
+const handleWidgetId = (id: number) => {
+  widgetId.value = id;
+};
+
+const handleErrorCallback = () => {
+  // console.log("Error callback");
+};
+const handleExpiredCallback = () => {
+  // console.log("Expired callback");
+};
+const handleLoadCallback = (response: unknown) => {
+  // console.log("Load callback", response);
 };
 </script>
 
@@ -191,6 +218,9 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
         class="text-red-500 text-sm mt-1 block"
       />
 
+            <RecaptchaV2 @widget-id="handleWidgetId" @error-callback="handleErrorCallback"
+        @expired-callback="handleExpiredCallback" @load-callback="handleLoadCallback" />
+
       <button
         type="submit"
         class="w-full py-3 bg-[#A4161A] hover:bg-[#821015] text-white font-bold rounded-lg transition disabled:opacity-50"
@@ -200,5 +230,3 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
     </Form>
   </section>
 </template>
-
-<style></style>
