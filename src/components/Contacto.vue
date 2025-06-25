@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import Swal from "sweetalert2";
 import TerminosYCondiciones from "./TerminosYCondiciones.vue";
 import AvisoDePrivacidad from "./AvisoDePrivacidad.vue";
 
@@ -24,7 +25,6 @@ const schema = yup.object({
   aceptaPrivacidad: yup
     .mixed()
     .oneOf([true], "Debes aceptar el aviso de privacidad"),
-    
 });
 
 const enviarFormulario = async (values: any, { resetForm }: any) => {
@@ -40,21 +40,55 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
       }
     );
 
+    const resultado = await respuesta.json();
+
     if (!respuesta.ok) {
-      throw new Error(`Error del servidor: ${respuesta.statusText}`);
+      if (resultado.errores && Array.isArray(resultado.errores)) {
+        await Swal.fire({
+          icon: "error",
+          title: "Errores de validación",
+          html: resultado.errores.map((e: string) => `<p>${e}</p>`).join(""),
+          confirmButtonColor: "#A4161A",
+        });
+      } else if (resultado.mensaje) {
+        await Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: resultado.mensaje,
+          confirmButtonColor: "#A4161A",
+        });
+      } else {
+        await Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Ocurrió un error al enviar tu mensaje.",
+          confirmButtonColor: "#A4161A",
+        });
+      }
+      return;
     }
 
-    const resultado = await respuesta.json();
-    console.log("Formulario enviado correctamente:", resultado);
-    alert("Gracias por contactarnos. Te responderemos pronto.");
+    // Si todo salió bien
+    await Swal.fire({
+      icon: "success",
+      title: "¡Mensaje enviado!",
+      text: resultado.mensaje || "Gracias por contactarnos. Te responderemos pronto.",
+      confirmButtonColor: "#A4161A",
+    });
 
     resetForm();
   } catch (error) {
     console.error("Error al enviar el formulario:", error);
-    alert("Ocurrió un error al enviar tu mensaje. Inténtalo más tarde.");
+    await Swal.fire({
+      icon: "error",
+      title: "Error inesperado",
+      text: "Ocurrió un error al enviar tu mensaje. Inténtalo más tarde.",
+      confirmButtonColor: "#A4161A",
+    });
   }
 };
 </script>
+
 
 <template>
   <section id="formulario" class="bg-[#212121] text-white py-24 px-6">
