@@ -33,9 +33,14 @@ const schema = yup.object({
 });
 
 const enviarFormulario = async (values: any, { resetForm }: any) => {
-  const token = handleGetResponse(widgetId.value);
+  let token = handleGetResponse(widgetId.value);
   if (!token) {
-    alert("Por favor completa el reCAPTCHA.");
+    await Swal.fire({
+      icon: "warning",
+      title: "reCAPTCHA requerido",
+      text: "Por favor completa el reCAPTCHA.",
+      confirmButtonColor: "#A4161A",
+    });
     return;
   }
 
@@ -81,7 +86,6 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
       return;
     }
 
-    // Si todo salió bien
     await Swal.fire({
       icon: "success",
       title: "¡Mensaje enviado!",
