@@ -55,6 +55,7 @@ async function cambiarEstatus(lead: Lead) {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/leads`, {
       method: "PATCH",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
       },
@@ -81,6 +82,7 @@ onMounted(async () => {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/leads`, {
       method: "GET",
+      credentials: 'include',
       headers: { "Content-Type": "application/json" }
     })
 
