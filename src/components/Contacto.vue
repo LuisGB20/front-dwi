@@ -6,10 +6,11 @@ import Swal from "sweetalert2";
 import TerminosYCondiciones from "./TerminosYCondiciones.vue";
 import AvisoDePrivacidad from "./AvisoDePrivacidad.vue";
 import { RecaptchaV2, useRecaptcha } from "vue3-recaptcha-v2";
+import emailjs, { init } from "emailjs-com";
 
 const { handleGetResponse } = useRecaptcha();
-
 const widgetId = ref<number | null>(null);
+init(import.meta.env.VITE_MAILJS_USER_ID);  // Aquí va tu User ID de EmailJS
 
 const schema = yup.object({
   nombre: yup.string().trim().required("El nombre es obligatorio"),
@@ -85,12 +86,27 @@ const enviarFormulario = async (values: any, { resetForm }: any) => {
       }
       return;
     }
-
+    
     await Swal.fire({
       icon: "success",
       title: "¡Mensaje enviado!",
       text: resultado.mensaje || "Gracias por contactarnos. Te responderemos pronto.",
       confirmButtonColor: "#A4161A",
+    });
+
+    await emailjs.send(
+      import.meta.env.VITE_MAILJS_SERVICE_ID,
+      import.meta.env.VITE_MAILJS_TEMPLATE_ID,
+      {
+        nombre: values.nombre,
+        correo: values.correo,
+        telefono: values.telefono,
+        mensaje: values.mensaje
+      }
+    ).then(() => {
+      console.log("Notificación enviada por EmailJS");
+    }).catch(err => {
+      console.error("Error al enviar notificación con EmailJS:", err);
     });
 
     resetForm();
